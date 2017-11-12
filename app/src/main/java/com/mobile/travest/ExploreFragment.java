@@ -3,10 +3,15 @@ package com.mobile.travest;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 
 /**
@@ -28,6 +33,10 @@ public class ExploreFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    RecyclerView placeList;
+    ArrayList<Place> placeArrayList;
+    PlaceAdapter placeAdapter;
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -58,6 +67,10 @@ public class ExploreFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        placeArrayList = new ArrayList<>();
+        placeArrayList.add(new Place(R.drawable.rajaampat, "Raja Ampat", "West Papua", 1800));
+        placeArrayList.add(new Place(R.drawable.greenbay, "Green Bay", "Banyuwangi", 1500));
     }
 
     @Override
@@ -65,6 +78,21 @@ public class ExploreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_explore, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        placeList = (RecyclerView) view.findViewById(R.id.rv_place);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        placeList.setLayoutManager(layoutManager);
+
+        placeList.setHasFixedSize(true);
+
+        placeAdapter = new PlaceAdapter(placeArrayList);
+        placeList.setAdapter(placeAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
