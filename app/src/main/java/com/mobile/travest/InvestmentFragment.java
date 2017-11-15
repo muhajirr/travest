@@ -3,10 +3,14 @@ package com.mobile.travest;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 
 /**
@@ -28,6 +32,9 @@ public class InvestmentFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    RadioGroup radioGroup;
+    Button btnInvest;
 
     public InvestmentFragment() {
         // Required empty public constructor
@@ -66,6 +73,41 @@ public class InvestmentFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_investment, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        radioGroup = (RadioGroup) view.findViewById(R.id.rgInvest);
+        btnInvest = (Button) view.findViewById(R.id.btnInvest);
+
+        btnInvest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnInvestClicked();
+            }
+        });
+    }
+
+    private void btnInvestClicked() {
+        int checked_id = radioGroup.getCheckedRadioButtonId();
+        int value = 0;
+        int currentPoint = MainActivity.user.getPoints();
+
+        if (checked_id == R.id.rb100) {
+            value = 90;
+        } else if (checked_id == R.id.rb250) {
+            value = 200;
+        } else if (checked_id == R.id.rb500) {
+            value = 450;
+        } else if (checked_id == R.id.rb1000) {
+            value = 1000;
+        }
+
+        MainActivity.user.setPoints(currentPoint + value);
+        MainActivity.dbHandler.updateUser(MainActivity.user);
+        Toast.makeText(getActivity(), "Investment Success! Point Added.", Toast.LENGTH_SHORT).show();
+    };
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

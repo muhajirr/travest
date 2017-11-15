@@ -33,28 +33,33 @@
                     android:padding="4dp"/>
 
                 <RadioGroup
+                    android:id="@+id/rgInvest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <RadioButton
+                        android:id="@+id/rb100"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
                         android:text="Rp. 100.000" />
 
                     <RadioButton
+                        android:id="@+id/rb250"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
                         android:text="Rp. 250.000" />
 
                     <RadioButton
+                        android:id="@+id/rb500"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
                         android:text="Rp. 500.000" />
 
                     <RadioButton
+                        android:id="@+id/rb1000"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"

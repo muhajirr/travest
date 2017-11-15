@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity
         NewsFragment.OnFragmentInteractionListener {
 
     FragmentManager fragmentManager;
+    static User user;
+    static DBHandler dbHandler;
+    TextView tvNameNav, tvEmailNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +43,25 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        dbHandler = new DBHandler(this);
+        user = dbHandler.getUserID(getIntent().getIntExtra("userID", 1));
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+
+        tvNameNav = (TextView) header.findViewById(R.id.name_nav_header);
+        tvEmailNav = (TextView) header.findViewById(R.id.email_nav_header);
+
+        tvNameNav.setText(user.getName());
+        tvEmailNav.setText(user.getEmail());
 
         fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, new DashboardFragment())
+                .commit();
+        navigationView.setCheckedItem(R.id.nav_dashboard);
     }
 
     @Override
@@ -57,7 +77,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        // getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -86,15 +106,15 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, new DashboardFragment())
                     .commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_points) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_help) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_about) {
 
         }
 

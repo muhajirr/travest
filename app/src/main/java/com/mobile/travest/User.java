@@ -5,7 +5,7 @@ package com.mobile.travest;
  */
 
 public class User {
-    int id;
+    int id, points;
     String email, name, password;
 
     public User() {
@@ -60,5 +60,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

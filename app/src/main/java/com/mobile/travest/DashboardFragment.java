@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class DashboardFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     ViewPagerAdapter adapter;
+
+    TextView tvName, tvPoints;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -84,7 +87,12 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        tvName = (TextView) view.findViewById(R.id.tvName);
+        tvPoints = (TextView) view.findViewById(R.id.tvPoints);
 
+        tvName.setText(MainActivity.user.getName());
+        String point = MainActivity.user.getPoints() + " points";
+        tvPoints.setText(point);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }

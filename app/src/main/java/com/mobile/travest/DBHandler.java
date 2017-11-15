@@ -22,6 +22,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String KEY_NAME_USER = "name";
     public static final String KEY_EMAIL_USER = "email";
     public static final String KEY_PASSWORD_USER = "password";
+    public static final String KEY_POINTS_USER = "points";
 
     public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -33,7 +34,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_ID_USER + " integer primary key, "
                 + KEY_NAME_USER + " text, "
                 + KEY_EMAIL_USER + " text, "
-                + KEY_PASSWORD_USER + " text)";
+                + KEY_PASSWORD_USER + " text, "
+                + KEY_POINTS_USER + " integer default 0)";
 
         sqLiteDatabase.execSQL(CREATE_TABLE_QUERY);
     }
@@ -56,7 +58,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public boolean verifyUser(User user) {
+    public int verifyUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selectQuery = "SELECT * FROM " + TABLE_USER_NAME + " WHERE "
@@ -65,16 +67,17 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor.getCount() > 0 ) {
+        if (cursor.moveToFirst()) {
+            int id = Integer.parseInt(cursor.getString(0));
             cursor.close();
             db.close();
 
-            return true;
+            return id;
         }
 
         cursor.close();
         db.close();
-        return false;
+        return -1;
     }
 
     public ArrayList<User> getAllUser() {
@@ -114,6 +117,7 @@ public class DBHandler extends SQLiteOpenHelper {
             user.setName(cursor.getString(1));
             user.setEmail(cursor.getString(2));
             user.setPassword(cursor.getString(3));
+            user.setPoints(Integer.parseInt(cursor.getString(4)));
         }
 
         return user;
@@ -122,17 +126,12 @@ public class DBHandler extends SQLiteOpenHelper {
     public void updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-/*        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(TABLE_CONTACT_NAME, contact.getPhone());*/
-
         String updateQuery = "UPDATE " + TABLE_USER_NAME + " SET " + KEY_NAME_USER + "='" + user.getName()
                 + "', " + KEY_EMAIL_USER + "='" + user.getEmail() + "', " + KEY_PASSWORD_USER + "='"
-                + user.getPassword() + "' WHERE " + KEY_ID_USER + "=" + user.getId();
+                + user.getPassword() + "', " + KEY_POINTS_USER + "=" + user.getPoints()
+                + " WHERE " + KEY_ID_USER + "=" + user.getId();
 
         db.execSQL(updateQuery);
-
-        // return db.update(TABLE_CONTACT_NAME, values, KEY_ID + "=" + contact.getId(), null);
     }
 
     public void deleteUser(User user) {

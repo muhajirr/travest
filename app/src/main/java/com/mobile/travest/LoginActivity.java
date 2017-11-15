@@ -36,8 +36,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!email.isEmpty()) {
                     if (!password.isEmpty()) {
-                        if (dbHandler.verifyUser(new User(email, password))) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        int id_user = dbHandler.verifyUser(new User(email, password));
+                        if (id_user != -1) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("userID", id_user);
+                            startActivity(intent);
                             finishAffinity();
                         } else {
                             Toast.makeText(LoginActivity.this, "Email or Password is incorrect!", Toast.LENGTH_SHORT).show();
