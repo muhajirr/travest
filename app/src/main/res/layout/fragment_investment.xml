@@ -42,28 +42,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
-                        android:text="Rp. 100.000" />
+                        android:text="@string/rb100" />
 
                     <RadioButton
                         android:id="@+id/rb250"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
-                        android:text="Rp. 250.000" />
+                        android:text="@string/rb250" />
 
                     <RadioButton
                         android:id="@+id/rb500"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
-                        android:text="Rp. 500.000" />
+                        android:text="@string/rb500" />
 
                     <RadioButton
                         android:id="@+id/rb1000"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimaryDark"
-                        android:text="Rp. 1.000.000" />
+                        android:text="@string/rb1000" />
 
                 </RadioGroup>
 

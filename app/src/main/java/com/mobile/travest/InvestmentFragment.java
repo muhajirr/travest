@@ -1,6 +1,8 @@
 package com.mobile.travest;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -90,23 +92,39 @@ public class InvestmentFragment extends Fragment {
     }
 
     private void btnInvestClicked() {
-        int checked_id = radioGroup.getCheckedRadioButtonId();
-        int value = 0;
-        int currentPoint = MainActivity.user.getPoints();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Invest")
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int checked_id = radioGroup.getCheckedRadioButtonId();
+                        int value = 0;
+                        int currentPoint = MainActivity.user.getPoints();
 
-        if (checked_id == R.id.rb100) {
-            value = 90;
-        } else if (checked_id == R.id.rb250) {
-            value = 200;
-        } else if (checked_id == R.id.rb500) {
-            value = 450;
-        } else if (checked_id == R.id.rb1000) {
-            value = 1000;
-        }
+                        if (checked_id == R.id.rb100) {
+                            value = 90;
+                        } else if (checked_id == R.id.rb250) {
+                            value = 200;
+                        } else if (checked_id == R.id.rb500) {
+                            value = 450;
+                        } else if (checked_id == R.id.rb1000) {
+                            value = 1000;
+                        }
 
-        MainActivity.user.setPoints(currentPoint + value);
-        MainActivity.dbHandler.updateUser(MainActivity.user);
-        Toast.makeText(getActivity(), "Investment Success! Point Added.", Toast.LENGTH_SHORT).show();
+                        MainActivity.user.setPoints(currentPoint + value);
+                        MainActivity.dbHandler.updateUser(MainActivity.user);
+                        Toast.makeText(getActivity(), "Investment Success! Point Added.", Toast.LENGTH_SHORT).show();
+                        getActivity().recreate();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     };
 
     // TODO: Rename method, update argument and hook method into UI event

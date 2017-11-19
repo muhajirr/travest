@@ -12,4 +12,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="news1">Status Awas Gunung Agung, Industri Pariwisata Bali Tak Terganggu</string>
     <string name="news2">Dihadiri 10 Dinas Pariwisata, Kemenpar Optimis di JTE 2017</string>
+    <string name="rb100">Rp. 100.000  -  <i>90 points</i></string>
+    <string name="rb250">Rp. 250.000  -  <i>200 points</i></string>
+    <string name="rb500">Rp. 500.000  -  <i>450 points</i></string>
+    <string name="rb1000">Rp. 1.000.000  -  <i>1000 points</i></string>
 </resources>
